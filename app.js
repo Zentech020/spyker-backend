@@ -16,41 +16,46 @@ const deals = [
     newPrice: '1.50'
   }
 ];
+function start() {
+  base('Table 1')
+    .select({
+      // Selecting the first 3 records in Grid view:
+      view: 'Grid view'
+    })
+    .eachPage(
+      function page(records, fetchNextPage) {
+        // This function (`page`) will get called for each page of records.
 
-base('Table 1')
-  .select({
-    // Selecting the first 3 records in Grid view:
-    view: 'Grid view'
-  })
-  .eachPage(
-    function page(records, fetchNextPage) {
-      // This function (`page`) will get called for each page of records.
+        const allList = records.map(record => {
+          const list = {
+            Name: record.get('Name'),
+            Phone: record.get('Phone'),
+            Email: record.get('Email'),
+            P1: record.get('P1'),
+            P2: record.get('P2'),
+            P3: record.get('P3')
+          };
+          return list;
+        });
 
-      const allList = records.map(record => {
-        const list = {
-          Name: record.get('Name'),
-          Phone: record.get('Phone'),
-          Email: record.get('Email'),
-          P1: record.get('P1'),
-          P2: record.get('P2'),
-          P3: record.get('P3')
-        };
-        return list;
-      });
+        checkList(allList);
 
-      checkList(allList);
-
-      fetchNextPage();
-    },
-    function done(err) {
-      if (err) {
-        console.error(err);
-        return;
+        fetchNextPage();
+      },
+      function done(err) {
+        if (err) {
+          console.error(err);
+          return;
+        }
       }
-    }
-  );
+    );
+}
 
 function checkList(list) {
   console.log('userList', list);
   console.log('dealList', deals);
 }
+
+cron.schedule('* * * * *', () => {
+  start();
+});
