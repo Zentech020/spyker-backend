@@ -21,66 +21,52 @@ const deals = [
   }
 ];
 
-let allDeals = [];
-base('Deals').select({
+const start = () => {
+  let allDeals = [];
+  let allUsers = [];
+
+  const deals = base('Deals').select({
     view: "Grid view"
-}).eachPage(function page(records, fetchNextPage) {
+  }).eachPage(function page(records, fetchNextPage) {
     allDeals = [...allDeals, ...records]
     fetchNextPage();
-}, function done(err) {
-    if (err) { console.error(err); return; }
-});
+  }, function done(err) {
+    if (err) {
+      console.error(err); return;
+    }
+    const users = base('User data').select({
+      view: "Grid view"
+    }).eachPage(function page(records, fetchNextPage) {
+      allUsers = [...allUsers, ...records]
+      fetchNextPage();
+    }, function done(err) {
+      if (err) {
+        console.error(err); return;
+      }
+      checkForAllDeals(allUsers, allDeals);
+    })
+  });
+}
 
-console.log(allDeals.length);
+const checkForAllDeals = (users, deals) => {
+  console.log(users.length, deals.length);
+  users.map(user => checkForDeals(user, deals))
+}
 
-// Is called every day via Heroku CRON job
-// base('Table 1')
-//   .select({
-//     // Selecting the first 3 records in Grid view:
-//     view: 'Grid view'
-//   })
-//   .eachPage(
-//     function page(records, fetchNextPage) {
-//       // This function (`page`) will get called for each page of records.
-//
-//       const allList = records.map(record => {
-//         checkForDeals(base('Table 1'), record, deals)
-//
-//         const list = {
-//           Name: record.get('Name'),
-//           Phone: record.get('Phone'),
-//           Email: record.get('Email'),
-//           P1: record.get('P1'),
-//           P2: record.get('P2'),
-//           P3: record.get('P3')
-//         };
-//         return list;
-//       });
-//
-//       fetchNextPage();
-//     },
-//     function done(err) {
-//       if (err) {
-//         console.error(err);
-//         return;
-//       }
-//     }
-//   );
-
-const checkForDeals = (table, record, deals) => {
+const checkForDeals = (record, deals) => {
   const oldP1 = record.get('P1');
   const oldP2 = record.get('P2');
   const oldP3 = record.get('P3');
 
   deals.map(deal => {
     if (record.get('P1-complete') === 0) {
-      compareDeal(base('Table 1'), record, deal.title, 'P1');
+      compareDeal(base('User data'), record, deal.get('Name'), 'P1');
     }
     if (record.get('P2-complete') === 0) {
-      compareDeal(base('Table 1'), record, deal.title, 'P2');
+      compareDeal(base('User data'), record, deal.get('Name'), 'P2');
     }
     if (record.get('P3-complete') === 0) {
-      compareDeal(base('Table 1'), record, deal.title, 'P3');
+      compareDeal(base('User data'), record, deal.get('Name'), 'P3');
     }
   });
 };
