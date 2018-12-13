@@ -10,17 +10,6 @@ var base = new Airtable({ apiKey: 'keyer1jczZsNjdA4C' }).base(
 var _ = require('lodash');
 const sgMail = require('@sendgrid/mail');
 
-const deals = [
-  {
-    title: 'Ariel 3in1 PODS Original',
-    description: 'lorem ipsum cola sixpack',
-    image: 'lorem ipsum',
-    priceLabel: '2 voor 1',
-    oldPrice: '2.18',
-    newPrice: '1.50'
-  }
-];
-
 const start = () => {
   let allDeals = [];
   let allUsers = [];
