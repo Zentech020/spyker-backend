@@ -7,6 +7,7 @@
     "@sendgrid/mail": "^6.3.1",
     "airtable": "^0.5.8",
     "lodash": "^4.17.11",
-    "node-cron": "^2.0.3"
+    "node-cron": "^2.0.3",
+    "node-mailjet": "^3.3.1"
   }
 }
