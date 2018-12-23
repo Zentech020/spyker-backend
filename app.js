@@ -1,12 +1,12 @@
 var cron = require('node-cron');
 
 var Airtable = require('airtable');
-var base = new Airtable({ apiKey: 'keyer1jczZsNjdA4C' }).base(
-  'apperUKb615OJ5vIW'
+var base = new Airtable({ apiKey: process.env.AIRTABLE_KEY }).base(
+  process.env.AIRTABLE_BASE
 );
 var _ = require('lodash');
 const mailjet = require('node-mailjet')
-  .connect("75ca55cb6caac913e69197ee2ded0739", "ebcbaa652b9712fb8068f64432c5d36d");
+  .connect(process.env.MAILJET_KEY_1, process.env.MAILJET_KEY_2);
 
 const start = () => {
   console.log('starting');
