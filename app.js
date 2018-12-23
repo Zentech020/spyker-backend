@@ -116,5 +116,3 @@ const sendMail = (email, name, productTitle, deal) => {
 cron.schedule('* * * * *', () => {
   start();
 });
-
-start();
