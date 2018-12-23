@@ -2,6 +2,9 @@
   "name": "spyker-backend",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "start": "node app.js"
+  },
   "license": "MIT",
   "dependencies": {
     "@sendgrid/mail": "^6.3.1",
