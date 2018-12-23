@@ -1,7 +1,4 @@
 var cron = require('node-cron');
-const sendGridAPI =
-  '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';
-const templateID = '';
 
 var Airtable = require('airtable');
 var base = new Airtable({ apiKey: 'keyer1jczZsNjdA4C' }).base(
