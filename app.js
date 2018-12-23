@@ -9,6 +9,7 @@ const mailjet = require('node-mailjet')
   .connect("75ca55cb6caac913e69197ee2ded0739", "ebcbaa652b9712fb8068f64432c5d36d");
 
 const start = () => {
+  console.log('starting');
   let allDeals = [];
   let allUsers = [];
 
