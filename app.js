@@ -8,7 +8,14 @@ var _ = require('lodash');
 const mailjet = require('node-mailjet')
   .connect(process.env.MAILJET_KEY_1, process.env.MAILJET_KEY_2);
 
+var http = require("http");
+
 const start = () => {
+  setInterval(function() {
+      http.get("http://spyker.herokuapp.com");
+      console.log('pinging...');
+  }, 1800000); // every 30 minutes
+  
   console.log('starting');
   let allDeals = [];
   let allUsers = [];
