@@ -10,12 +10,12 @@ const mailjet = require('node-mailjet')
 
 var http = require("http");
 
-const start = () => {
-  setInterval(function() {
-      http.get("http://spyker.herokuapp.com");
-      console.log('pinging...');
-  }, 1800000); // every 30 minutes
-  
+setInterval(function() {
+   http.get("http://spyker.herokuapp.com");
+   console.log('pinging...');
+}, 1800);
+
+const start = () => {  
   console.log('starting');
   let allDeals = [];
   let allUsers = [];
@@ -72,6 +72,7 @@ const compareDeal = (base, record, dealTitle, customerProductNo, dealObj) => {
       .includes(record.get(customerProductNo).toLowerCase())
   ) {
     const updateObj = {};
+    console.log('YO er is een deal voor ' + record.get('First Name') + ' voor ' + dealTitle);
     updateObj[customerProductNo + '-complete'] = 1;
     base.update(record.id, updateObj);
     sendMail(record.get('Email'), record.get('First name'), dealTitle, dealObj);
