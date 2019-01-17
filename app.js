@@ -13,7 +13,7 @@ var http = require("http");
 setInterval(function() {
    http.get("http://spyker.herokuapp.com");
    console.log('pinging...');
-}, 1800);
+}, 100000);
 
 const start = () => {  
   console.log('starting');
